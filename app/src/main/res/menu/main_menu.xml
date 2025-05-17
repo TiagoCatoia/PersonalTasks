@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/open_activity_mi"
-        android:title="@string/menu"
-        android:icon="@drawable/ic_main_menu"
-        app:showAsAction="always"/>
-    <item android:title="@string/options_menu">
-        <menu>
-            <item
-                android:id="@+id/newTask_mi"
-                android:title="@string/new_task"/>
-        </menu>
-    </item>
+        android:id="@+id/newTask_mi"
+        android:title="@string/new_task"/>
 </menu>

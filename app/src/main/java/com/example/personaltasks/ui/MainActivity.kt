@@ -1,11 +1,14 @@
 package com.example.personaltasks.ui
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.personaltasks.R
+import com.example.personaltasks.adapter.TaskAdapter
 import com.example.personaltasks.databinding.ActivityMainBinding
 import com.example.personaltasks.model.Task
 
@@ -14,15 +17,17 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private lateinit var adapter: ArrayAdapter<String>
-    private val tasks = mutableListOf<String>()
+    private lateinit var adapter: ArrayAdapter<Task>
+    private val tasks = mutableListOf<Task>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(amb.root)
-
-        adapter = ArrayAdapter(this, R.layout.item_task, tasks)
+        setSupportActionBar(amb.toolbarIn.toolbar)
+        adapter = TaskAdapter(this, tasks)
         amb.taskListLv.adapter = adapter
+        // Substitui o icone padrão pelo personalizado
+        amb.toolbarIn.toolbar.overflowIcon = ContextCompat.getDrawable(this, R.drawable.ic_main_menu)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -34,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         return when(item.itemId) {
             R.id.newTask_mi -> {
                 val newTask = Task("Título", "Descrição", "Data")
-                tasks.add(newTask.toString())
+                tasks.add(newTask)
                 adapter.notifyDataSetChanged()
                 true
             }
