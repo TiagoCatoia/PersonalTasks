@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.personaltasks.R
 import com.example.personaltasks.adapter.TaskAdapter
 import com.example.personaltasks.databinding.ActivityMainBinding
@@ -17,17 +18,23 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private lateinit var adapter: ArrayAdapter<Task>
     private val tasks = mutableListOf<Task>()
+
+    private val adapter: TaskAdapter by lazy {
+        TaskAdapter(tasks)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(amb.root)
         setSupportActionBar(amb.toolbarIn.toolbar)
-        adapter = TaskAdapter(this, tasks)
-        amb.taskListLv.adapter = adapter
+
+        supportActionBar?.subtitle = getString(R.string.task_list)
         // Substitui o icone padrão pelo personalizado
         amb.toolbarIn.toolbar.overflowIcon = ContextCompat.getDrawable(this, R.drawable.ic_main_menu)
+
+        amb.taskRv.adapter = adapter
+        amb.taskRv.layoutManager = LinearLayoutManager(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -40,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             R.id.newTask_mi -> {
                 val newTask = Task("Título", "Descrição", "Data")
                 tasks.add(newTask)
-                adapter.notifyDataSetChanged()
+                adapter.notifyItemInserted(tasks.lastIndex)
                 true
             }
             else -> {
