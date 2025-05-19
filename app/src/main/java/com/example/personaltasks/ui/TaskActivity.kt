@@ -3,6 +3,7 @@ package com.example.personaltasks.ui
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -37,7 +38,9 @@ class TaskActivity: AppCompatActivity() {
             with(atb) {
                 titleEt.setText(it.title)
                 descriptionEt.setText(it.description)
-                val date = LocalDate.parse(it.deadline)
+                val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                Log.d("DEBUG", "Valor de it.deadline: '${it.deadline}'")
+                val date = LocalDate.parse(it.deadline.trim(), formatter)
                 dateDp.updateDate(date.year, date.monthValue - 1, date.dayOfMonth)
 
                 // Verifica se está em modo de visualização (detalhes)
@@ -55,7 +58,7 @@ class TaskActivity: AppCompatActivity() {
 
         with(atb) {
             saveBt.setOnClickListener {
-                val selectedDate = LocalDate.of(dateDp.year, dateDp.month - 1, dateDp.dayOfMonth)
+                val selectedDate = LocalDate.of(dateDp.year, dateDp.month, dateDp.dayOfMonth)
                 val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
                 Task(
                     receivedTask?.id?:hashCode(),

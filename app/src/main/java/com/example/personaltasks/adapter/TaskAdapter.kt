@@ -2,19 +2,47 @@ package com.example.personaltasks.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
+import com.example.personaltasks.R
 import com.example.personaltasks.databinding.ItemTaskBinding
 import com.example.personaltasks.model.Task
+import com.example.personaltasks.ui.OnTaskClickListener
 
 class TaskAdapter(
-    private val taskList: MutableList<Task>
+    private val taskList: MutableList<Task>,
+    private val onTaskClickListener: OnTaskClickListener
 ): RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
-    class TaskViewHolder(private val binding: ItemTaskBinding): RecyclerView.ViewHolder(binding.root) {
+    inner class TaskViewHolder(private val itb: ItemTaskBinding): RecyclerView.ViewHolder(itb.root) {
         fun bind(task: Task) {
-            binding.titleTv.text = task.title
-            binding.descriptionTv.text = task.description
-            binding.dateTv.text = task.deadline
+            itb.titleTv.text = task.title
+            itb.descriptionTv.text = task.description
+            itb.dateTv.text = task.deadline
+
+            itb.root.setOnLongClickListener { view ->
+                val menuPopUp = PopupMenu(view.context, view)
+                menuPopUp.inflate(R.menu.item_task_menu)
+                menuPopUp.setOnMenuItemClickListener {
+                    when(it.itemId) {
+                        R.id.edit_mi -> {
+                            onTaskClickListener.onEditTaskMenuItemClick(adapterPosition)
+                            true
+                        }
+                        R.id.delete_mi -> {
+                            onTaskClickListener.onDeleteTaskMenuItemClick(adapterPosition)
+                            true
+                        }
+                        R.id.details_mi -> {
+                            onTaskClickListener.onDetailsTaskMenuItemClick(adapterPosition)
+                            true
+                        }
+                        else -> false
+                    }
+                }
+                menuPopUp.show()
+                true
+            }
         }
     }
 

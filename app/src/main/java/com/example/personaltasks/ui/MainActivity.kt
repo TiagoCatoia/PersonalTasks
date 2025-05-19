@@ -1,12 +1,11 @@
 package com.example.personaltasks.ui
 
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -16,9 +15,10 @@ import com.example.personaltasks.R
 import com.example.personaltasks.adapter.TaskAdapter
 import com.example.personaltasks.databinding.ActivityMainBinding
 import com.example.personaltasks.model.Constant.EXTRA_TASK
+import com.example.personaltasks.model.Constant.EXTRA_VIEW_TASk
 import com.example.personaltasks.model.Task
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnTaskClickListener {
     private val amb: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     private val tasks = mutableListOf<Task>()
 
     private val adapter: TaskAdapter by lazy {
-        TaskAdapter(tasks)
+        TaskAdapter(tasks, this)
     }
 
     private lateinit var tarl: ActivityResultLauncher<Intent>
@@ -80,6 +80,27 @@ class MainActivity : AppCompatActivity() {
             else -> {
                 false
             }
+        }
+    }
+
+    override fun onEditTaskMenuItemClick(position: Int) {
+        Intent(this, TaskActivity::class.java).apply {
+            putExtra(EXTRA_TASK, tasks[position])
+            tarl.launch(this)
+        }
+    }
+
+    override fun onDeleteTaskMenuItemClick(position: Int) {
+        tasks.removeAt(position)
+        adapter.notifyItemRemoved(position)
+        Toast.makeText(this, "Task removed", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onDetailsTaskMenuItemClick(position: Int) {
+        Intent(this, TaskActivity::class.java).apply {
+            putExtra(EXTRA_TASK, tasks[position])
+            putExtra(EXTRA_VIEW_TASk, true)
+            startActivity(this)
         }
     }
 }

@@ -9,5 +9,8 @@
     <string name="task_list">Task list</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="edit_task">Edit task</string>
+    <string name="delete_task">Delete task</string>
+    <string name="details_task">Details task</string>
 
 </resources>
