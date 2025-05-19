@@ -1,3 +1,13 @@
 package com.example.personaltasks.model
 
-data class Task(val title: String, val description: String, val deadline: String)
+import android.os.Parcelable
+import com.example.personaltasks.model.Constant.INVALID_CONTACT_ID
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+data class Task(
+    var id: Int? = INVALID_CONTACT_ID,
+    var title: String,
+    var description: String,
+    var deadline: String
+): Parcelable
