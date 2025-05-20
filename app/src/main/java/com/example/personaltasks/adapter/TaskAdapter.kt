@@ -30,7 +30,7 @@ class TaskAdapter(
                             true
                         }
                         R.id.delete_mi -> {
-                            onTaskClickListener.onDeleteTaskMenuItemClick(adapterPosition)
+                            onTaskClickListener.onRemoveTaskMenuItemClick(adapterPosition)
                             true
                         }
                         R.id.details_mi -> {
