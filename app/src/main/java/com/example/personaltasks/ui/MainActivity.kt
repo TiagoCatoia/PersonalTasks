@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.personaltasks.R
 import com.example.personaltasks.adapter.TaskAdapter
+import com.example.personaltasks.controller.MainController
 import com.example.personaltasks.databinding.ActivityMainBinding
 import com.example.personaltasks.model.Constant.EXTRA_TASK
 import com.example.personaltasks.model.Constant.EXTRA_VIEW_TASk
@@ -30,6 +31,10 @@ class MainActivity : AppCompatActivity(), OnTaskClickListener {
     }
 
     private lateinit var tarl: ActivityResultLauncher<Intent>
+
+    private val mainController: MainController by lazy {
+        MainController(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,14 +61,18 @@ class MainActivity : AppCompatActivity(), OnTaskClickListener {
                     if (position == -1) {
                         tasks.add(receivedTask)
                         adapter.notifyItemInserted(tasks.lastIndex)
+                        mainController.insertTask(receivedTask)
                     }
                     else {
                         tasks[position] = receivedTask
                         adapter.notifyItemChanged(position)
+                        mainController.modifyTask(receivedTask)
                     }
                 }
             }
         }
+
+        fillTaskList()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -77,9 +86,7 @@ class MainActivity : AppCompatActivity(), OnTaskClickListener {
                 tarl.launch(Intent(this, TaskActivity::class.java))
                 true
             }
-            else -> {
-                false
-            }
+            else -> false
         }
     }
 
@@ -90,7 +97,8 @@ class MainActivity : AppCompatActivity(), OnTaskClickListener {
         }
     }
 
-    override fun onDeleteTaskMenuItemClick(position: Int) {
+    override fun onRemoveTaskMenuItemClick(position: Int) {
+        mainController.removeTask(tasks[position])
         tasks.removeAt(position)
         adapter.notifyItemRemoved(position)
         Toast.makeText(this, "Task removed", Toast.LENGTH_SHORT).show()
@@ -102,5 +110,19 @@ class MainActivity : AppCompatActivity(), OnTaskClickListener {
             putExtra(EXTRA_VIEW_TASk, true)
             startActivity(this)
         }
+    }
+
+    private fun fillTaskList() {
+        tasks.clear()
+        Thread {
+            // Busca em background
+            val newTasks = mainController.getAllTasks()
+
+            // Atualiza e notifica na UI Thread
+            runOnUiThread {
+                tasks.addAll(newTasks)
+                adapter.notifyDataSetChanged()
+            }
+        }.start()
     }
 }
