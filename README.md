@@ -21,3 +21,6 @@ Aplicativo simples de lista de tarefas, com suporte a criação, edição e remo
 ## Requisitos
 
 - Aplicativo possui compatibilidade mínima com Android 8.0 (API 26)
+
+## Vídeo demonstração
+https://youtu.be/1lLCAoEymZM
