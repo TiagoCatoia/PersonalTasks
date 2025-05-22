@@ -14,12 +14,15 @@ class TaskAdapter(
     private val onTaskClickListener: OnTaskClickListener
 ): RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
+    // ViewHolder que representa visualmente cada item da lista de tarefas
     inner class TaskViewHolder(private val itb: ItemTaskBinding): RecyclerView.ViewHolder(itb.root) {
+        // Associa os dados da tarefa às views do item e define o menu de contexto
         fun bind(task: Task) {
             itb.titleTv.text = task.title
             itb.descriptionTv.text = task.description
             itb.dateTv.text = task.deadline
 
+            // Clique longo exibe menu popup com opções (editar, deletar, detalhes)
             itb.root.setOnLongClickListener { view ->
                 val menuPopUp = PopupMenu(view.context, view)
                 menuPopUp.inflate(R.menu.item_task_menu)
@@ -46,6 +49,7 @@ class TaskAdapter(
         }
     }
 
+    // Cria uma nova instância de ViewHolder quando necessário
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
         val binding = ItemTaskBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return TaskViewHolder(binding)
