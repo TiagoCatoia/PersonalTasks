@@ -9,7 +9,7 @@ import com.example.personaltasks.ui.MainActivity
 class MainController(mainActivity: MainActivity) {
     private val taskDao: TaskDao = Room.databaseBuilder(
         mainActivity, TaskRoomDb::class.java, "task-database"
-    ).build().taskDao()
+    ).fallbackToDestructiveMigration(true).build().taskDao()
 
     fun insertTask(task: Task) {
         Thread{

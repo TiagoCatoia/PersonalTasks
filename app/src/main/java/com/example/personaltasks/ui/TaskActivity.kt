@@ -37,10 +37,11 @@ class TaskActivity: AppCompatActivity() {
             with(atb) {
                 titleEt.setText(it.title)
                 descriptionEt.setText(it.description)
+                finishedCb.setChecked(it.finished)
 
                 val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
                 val date = LocalDate.parse(it.deadline.trim(), formatter)
-                dateDp.updateDate(date.year, date.monthValue - 1, date.dayOfMonth)
+                dateDp.updateDate(date.year, date.monthValue, date.dayOfMonth)
 
                 // Verifica se está em modo de visualização (detalhes)
                 val viewTask = intent.getBooleanExtra(EXTRA_VIEW_TASk, false)
@@ -51,6 +52,7 @@ class TaskActivity: AppCompatActivity() {
                     descriptionEt.isEnabled = false
                     dateDp.isEnabled = false
                     saveBt.visibility = View.GONE
+                    finishedCb.isEnabled = false
                 }
             }
         }
@@ -63,7 +65,8 @@ class TaskActivity: AppCompatActivity() {
                     receivedTask?.id?:hashCode(),
                     titleEt.text.toString(),
                     descriptionEt.text.toString(),
-                    selectedDate.format(formatter)
+                    selectedDate.format(formatter),
+                    finishedCb.isChecked
                 ).let { task ->
                     Intent().apply {
                         putExtra(EXTRA_TASK, task)
