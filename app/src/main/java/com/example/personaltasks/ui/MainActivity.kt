@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), OnTaskClickListener {
         setSupportActionBar(amb.toolbarIn.toolbar)
 
         supportActionBar?.subtitle = getString(R.string.task_list)
-        // Substitui o icone padrão pelo personalizado
+        // Substitui o icone padrão pelo personalizado_
         amb.toolbarIn.toolbar.overflowIcon = ContextCompat.getDrawable(this, R.drawable.ic_main_menu)
 
         amb.taskRv.adapter = adapter
