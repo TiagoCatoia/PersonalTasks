@@ -1,5 +1,6 @@
 [versions]
 agp = "8.8.2"
+firebaseBom = "33.15.0"
 kotlin = "1.9.24"
 coreKtx = "1.15.0"
 junit = "4.13.2"
@@ -12,9 +13,12 @@ constraintlayout = "2.2.1"
 parcelize = "2.1.20"
 kspVersion = "2.1.20-2.0.1"
 roomVersion = "2.7.1"
+googleServices = "4.4.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+firebase-database-ktx = { module = "com.google.firebase:firebase-database-ktx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -31,3 +35,4 @@ android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "parcelize"}
 ksp = { id = "com.google.devtools.ksp", version.ref = "kspVersion" }
+google-service = { id = "com.google.gms.google-services", version.ref = "googleServices" }
