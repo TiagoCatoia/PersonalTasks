@@ -18,8 +18,8 @@ class MainController(mainActivity: MainActivity) {
     }
 
     // Necessário chamar esses métodos fora da Thread principal para não travar a UI
-    fun getTask(id: Int) = taskDao.retrieveContact(id)
-    fun getAllTasks() = taskDao.retrieveContacts()
+    fun getTask(id: Int) = taskDao.retrieveTask(id)
+    fun getAllTasks() = taskDao.retrieveTasks()
 
     fun modifyTask(task: Task) {
         Thread{

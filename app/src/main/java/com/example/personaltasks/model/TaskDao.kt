@@ -12,10 +12,10 @@ interface TaskDao {
     fun createTask(task: Task): Long
 
     @Query("SELECT * FROM Task WHERE id = :id")
-    fun retrieveContact(id: Int): Task
+    fun retrieveTask(id: Int): Task
 
     @Query("SELECT * FROM Task")
-    fun retrieveContacts(): MutableList<Task>
+    fun retrieveTasks(): MutableList<Task>
 
     @Update
     fun updateTask(task: Task): Int
