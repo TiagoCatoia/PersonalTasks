@@ -131,6 +131,10 @@ class MainActivity : AppCompatActivity(), OnTaskClickListener {
                 finish()
                 true
             }
+            R.id.history_mi -> {
+                startActivity(Intent(this, ActivityHistory::class.java))
+                true
+            }
             else -> false
         }
     }

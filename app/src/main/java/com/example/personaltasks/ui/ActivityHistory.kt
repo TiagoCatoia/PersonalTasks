@@ -6,10 +6,14 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.personaltasks.R
 import com.example.personaltasks.adapter.TaskHistoryAdapter
 import com.example.personaltasks.controller.HistoryController
 import com.example.personaltasks.controller.MainController
@@ -76,9 +80,9 @@ class ActivityHistory: AppCompatActivity(), OnTaskHistoryClickListener {
         ahb.taskRv.layoutManager = LinearLayoutManager(this)
 
         getTasksHandler.sendMessageDelayed(
-                Message().apply {
-            what = GET_TASKS_MESSAGE
-        }, GET_TASKS_INTERVAL
+            Message().apply {
+              what = GET_TASKS_MESSAGE
+            }, GET_TASKS_INTERVAL
         )
     }
 
@@ -94,6 +98,21 @@ class ActivityHistory: AppCompatActivity(), OnTaskHistoryClickListener {
             putExtra(EXTRA_TASK, tasks[position])
             putExtra(EXTRA_VIEW_TASk, true)
             startActivity(this)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.history_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.myTasks_mi -> {
+                finish()
+                true
+            }
+            else -> { false }
         }
     }
 

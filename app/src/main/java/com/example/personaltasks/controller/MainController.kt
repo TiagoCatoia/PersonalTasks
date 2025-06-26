@@ -30,7 +30,7 @@ class MainController(private val mainActivity: MainActivity) {
 
     fun getAllTasks() {
         databaseCoroutineScope.launch {
-            val tasks = taskDao.retrieveTasks()
+            val tasks = taskDao.retrieveTasks().filter { !it.removed }
             mainActivity.getTasksHandler.sendMessage(Message().apply {
                 data.putParcelableArray(EXTRA_TASK_ARRAY, tasks.toTypedArray())
             })
@@ -45,7 +45,8 @@ class MainController(private val mainActivity: MainActivity) {
 
     fun removeTask(task: Task) {
         databaseCoroutineScope.launch {
-            taskDao.deleteTask(task)
+            task.removed = true
+            taskDao.updateTask(task)
         }
     }
 }

@@ -20,5 +20,6 @@
     <string name="sign_out">Sign out</string>
     <string name="history">History</string>
     <string name="my_tasks">My Tasks</string>
+    <string name="restore_task">Restore task</string>
 
 </resources>
