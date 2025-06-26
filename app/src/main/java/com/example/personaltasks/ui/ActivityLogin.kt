@@ -55,9 +55,30 @@ class ActivityLogin: AppCompatActivity() {
 
         alb.resetPasswordBt.setOnClickListener {
             signInCoroutineScope.launch {
-                val email = alb.emailLoginEt.toString()
+                val email = alb.emailLoginEt.text.toString().trim()
                 if (email.isNotEmpty()) {
-                    Firebase.auth.sendPasswordResetEmail(email)
+                    Firebase.auth.sendPasswordResetEmail(
+                        email
+                    ).addOnSuccessListener {
+                        Toast.makeText(
+                            this@ActivityLogin,
+                            "Password reset link sent to ${email}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            this@ActivityLogin,
+                            "Failed to send reset link. Cause: ${it.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else {
+                    Toast.makeText(
+                        this@ActivityLogin,
+                        "Please enter your email to reset your passwordtiago.",
+                        Toast.LENGTH_SHORT)
+                    .show()
                 }
             }
         }
