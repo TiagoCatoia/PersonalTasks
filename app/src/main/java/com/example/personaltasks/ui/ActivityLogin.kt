@@ -28,10 +28,19 @@ class ActivityLogin: AppCompatActivity() {
         }
 
         alb.signInBt.setOnClickListener {
+            if (alb.emailLoginEt.text.isEmpty()) {
+                Toast.makeText(this, "The email field cannot be empty.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            if (alb.passwordLoginEt.text.isEmpty()) {
+                Toast.makeText(this, "The password field cannot be empty.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             signInCoroutineScope.launch {
                 Firebase.auth.signInWithEmailAndPassword(
-                    alb.emailLoginEt.toString(),
-                    alb.passwordLoginEt.toString()
+                    alb.emailLoginEt.text.toString().trim(),
+                    alb.passwordLoginEt.text.toString().trim()
                 ).addOnFailureListener {
                     Toast.makeText(
                         this@ActivityLogin,

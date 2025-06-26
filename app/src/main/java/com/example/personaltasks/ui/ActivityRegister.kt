@@ -25,8 +25,8 @@ class ActivityRegister: AppCompatActivity() {
         arb.signUpBt.setOnClickListener {
             signUpCoroutine.launch {
                 Firebase.auth.createUserWithEmailAndPassword(
-                    arb.emailRegisterEt.toString(),
-                    arb.passwordRegisterEt.toString()
+                    arb.emailRegisterEt.text.toString().trim(),
+                    arb.passwordRegisterEt.text.toString().trim()
                 ).addOnFailureListener {
                     Toast.makeText(
                         this@ActivityRegister,
