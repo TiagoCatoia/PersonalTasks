@@ -19,5 +19,6 @@ data class Task(
     var deadline: String =
         LocalDate.now().format(
             DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault())),
-    var finished: Boolean = false
+    var finished: Boolean = false,
+    var removed: Boolean = false
 ): Parcelable

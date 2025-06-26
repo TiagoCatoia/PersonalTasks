@@ -18,5 +18,7 @@
     <string name="sign_up">Sign up</string>
     <string name="reset_password">Reset password</string>
     <string name="sign_out">Sign out</string>
+    <string name="history">History</string>
+    <string name="my_tasks">My Tasks</string>
 
 </resources>

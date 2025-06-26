@@ -10,6 +10,8 @@ import com.example.personaltasks.databinding.ActivityTaskBinding
 import com.example.personaltasks.model.Constant.EXTRA_TASK
 import com.example.personaltasks.model.Constant.EXTRA_VIEW_TASk
 import com.example.personaltasks.model.Task
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -81,5 +83,10 @@ class TaskActivity: AppCompatActivity() {
             Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show()
             finish()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (Firebase.auth.currentUser == null) finish()
     }
 }
