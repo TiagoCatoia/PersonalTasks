@@ -22,6 +22,8 @@ import com.example.personaltasks.model.Constant.EXTRA_TASK
 import com.example.personaltasks.model.Constant.EXTRA_TASK_ARRAY
 import com.example.personaltasks.model.Constant.EXTRA_VIEW_TASk
 import com.example.personaltasks.model.Task
+import com.google.firebase.Firebase
+import com.google.firebase.auth.auth
 
 class MainActivity : AppCompatActivity(), OnTaskClickListener {
     private val amb: ActivityMainBinding by lazy {
@@ -124,6 +126,11 @@ class MainActivity : AppCompatActivity(), OnTaskClickListener {
                 tarl.launch(Intent(this, TaskActivity::class.java))
                 true
             }
+            R.id.sign_out_mi -> {
+                Firebase.auth.signOut()
+                finish()
+                true
+            }
             else -> false
         }
     }
@@ -148,5 +155,10 @@ class MainActivity : AppCompatActivity(), OnTaskClickListener {
             putExtra(EXTRA_VIEW_TASk, true)
             startActivity(this)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (Firebase.auth.currentUser == null) finish()
     }
 }
