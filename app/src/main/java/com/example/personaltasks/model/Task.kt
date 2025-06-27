@@ -20,5 +20,6 @@ data class Task(
         LocalDate.now().format(
             DateTimeFormatter.ofPattern("dd/MM/yyyy", Locale.getDefault())),
     var finished: Boolean = false,
-    var removed: Boolean = false
+    var removed: Boolean = false,
+    var prior: String = ""
 ): Parcelable

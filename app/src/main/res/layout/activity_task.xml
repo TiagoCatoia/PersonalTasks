@@ -71,6 +71,41 @@
                 android:layout_height="wrap_content"
                 android:text="Finished" />
 
+            <TextView
+                android:id="@+id/prior_placeholder_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:text="Prior"
+                android:textColor="@android:color/darker_gray"
+                android:layout_marginTop="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2"
+                android:layout_marginTop="16dp">
+                <Button
+                    android:id="@+id/low_prior_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Low"
+                    android:backgroundTint="@color/design_default_color_secondary_variant"/>
+                <Button
+                    android:id="@+id/medium_prior_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Medium"
+                    android:backgroundTint="@color/design_default_color_secondary_variant"/>
+                <Button
+                    android:id="@+id/high_prior_bt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="High"
+                    android:backgroundTint="@color/design_default_color_secondary_variant"/>
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

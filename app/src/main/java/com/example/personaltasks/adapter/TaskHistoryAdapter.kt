@@ -22,6 +22,7 @@ class TaskHistoryAdapter(
             itb.descriptionTv.text = task.description
             itb.dateTv.text = task.deadline
             itb.finishedCb.setChecked(task.finished)
+            itb.priorTv.text = task.prior
 
             // Clique longo exibe menu popup com opções (detalhes e restaurar)
             itb.root.setOnLongClickListener { view ->

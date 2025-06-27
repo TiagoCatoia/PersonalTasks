@@ -22,6 +22,7 @@ class TaskAdapter(
             itb.descriptionTv.text = task.description
             itb.dateTv.text = task.deadline
             itb.finishedCb.setChecked(task.finished)
+            itb.priorTv.text = task.prior
 
             // Clique longo exibe menu popup com opções (editar, deletar, detalhes)
             itb.root.setOnLongClickListener { view ->

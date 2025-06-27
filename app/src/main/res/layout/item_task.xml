@@ -24,11 +24,23 @@
         android:layout_height="wrap_content"
         android:text="@string/date"/>
 
+    <TextView
+        android:id="@+id/prior_placeholder_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Prior: " />
+
+    <TextView
+        android:id="@+id/prior_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/prior" />
+
     <CheckBox
         android:id="@+id/finished_cb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Finished"
+        android:text="@string/finished"
         android:clickable="false" />
 
 </LinearLayout>

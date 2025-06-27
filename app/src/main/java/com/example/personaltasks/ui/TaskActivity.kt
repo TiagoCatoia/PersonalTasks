@@ -40,6 +40,7 @@ class TaskActivity: AppCompatActivity() {
                 titleEt.setText(it.title)
                 descriptionEt.setText(it.description)
                 finishedCb.setChecked(it.finished)
+                selectPrior(it.prior)
 
                 val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
                 val date = LocalDate.parse(it.deadline.trim(), formatter)
@@ -55,6 +56,9 @@ class TaskActivity: AppCompatActivity() {
                     dateDp.isEnabled = false
                     saveBt.visibility = View.GONE
                     finishedCb.isEnabled = false
+                    lowPriorBt.isEnabled = false
+                    mediumPriorBt.isEnabled = false
+                    highPriorBt.isEnabled = false
                 }
             }
         }
@@ -63,12 +67,15 @@ class TaskActivity: AppCompatActivity() {
             saveBt.setOnClickListener {
                 val selectedDate = LocalDate.of(dateDp.year, dateDp.month, dateDp.dayOfMonth)
                 val formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                val priorSelected = findPriorSelected()
                 Task(
                     receivedTask?.id?:hashCode(),
                     titleEt.text.toString(),
                     descriptionEt.text.toString(),
                     selectedDate.format(formatter),
-                    finishedCb.isChecked
+                    finishedCb.isChecked,
+                    false,
+                    priorSelected
                 ).let { task ->
                     Intent().apply {
                         putExtra(EXTRA_TASK, task)
@@ -83,6 +90,56 @@ class TaskActivity: AppCompatActivity() {
             Toast.makeText(this, "Canceled", Toast.LENGTH_SHORT).show()
             finish()
         }
+
+        atb.lowPriorBt.setOnClickListener {
+            selectPrior("Low")
+        }
+        atb.mediumPriorBt.setOnClickListener {
+            selectPrior("Medium")
+        }
+        atb.highPriorBt.setOnClickListener {
+            selectPrior("High")
+        }
+    }
+
+    fun selectPrior(prior: String): String {
+        when(prior) {
+            "Low" -> {
+                atb.lowPriorBt.setText("Low *")
+                atb.mediumPriorBt.setText("Medium")
+                atb.highPriorBt.setText("High")
+                return "Low"
+            }
+            "Medium" -> {
+                atb.lowPriorBt.setText("Low")
+                atb.mediumPriorBt.setText("Medium *")
+                atb.highPriorBt.setText("High")
+                return "Medium"
+            }
+            "High" -> {
+                atb.lowPriorBt.setText("Low")
+                atb.mediumPriorBt.setText("Medium")
+                atb.highPriorBt.setText("High *")
+                return "High"
+            }
+            else -> return ""
+        }
+    }
+
+    fun findPriorSelected(): String {
+        val lowPrior = atb.lowPriorBt.text
+        val mediumPrior = atb.mediumPriorBt.text
+        val highPrior = atb.highPriorBt.text
+        if (lowPrior.contains("*")) {
+            return "Low"
+        }
+        if (mediumPrior.contains("*")) {
+            return "Medium"
+        }
+        if (highPrior.contains("*")) {
+            return "High"
+        }
+        else return ""
     }
 
     override fun onStart() {
